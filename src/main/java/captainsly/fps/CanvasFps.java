@@ -35,19 +35,8 @@ public class CanvasFps extends CanvasApplication {
 	private double dirX = -1, dirY = 0;
 	private double planeX = 0, planeY = 0.66;
 
-//	private Image[] i;
-
 	public CanvasFps() {
-		super(1280, 720);
-//		i[0] = new Image("eagle.png");
-//		i[1] = new Image("redbrick.png");
-//		i[2] = new Image("purplestone.png");
-//		i[3] = new Image("greystone.png");
-//		i[4] = new Image("bluestone.png");
-//		i[5] = new Image("mossy.png");
-//		i[6] = new Image("wood.png");
-//		i[7] = new Image("cobblestone.png");
-	}
+		super(1280, 720);}
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
