@@ -7,6 +7,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -63,12 +64,12 @@ public abstract class CanvasApplication extends Application {
 			@Override
 			public void handle(long currentNanoTime) {
 
+				redraw();
+				render();
 				oldTime = time;
 				time = System.currentTimeMillis();
 				frameTime = time - oldTime;
 
-				redraw();
-				render();
 			}
 
 		}.start();
@@ -92,7 +93,7 @@ public abstract class CanvasApplication extends Application {
 		gc.strokeLine(x, y, x2, y2);
 	}
 
-	public void drawLine(int x, int y, int x2, int y2, Color... colors) {
+	public void drawLine(int x, int y, int x2, int y2, CycleMethod meth, Color... colors) {
 
 		ArrayList<Stop> stops = new ArrayList<Stop>();
 		int i = 0;
@@ -101,7 +102,7 @@ public abstract class CanvasApplication extends Application {
 			i++;
 		}
 
-		LinearGradient linearGradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops);
+		LinearGradient linearGradient = new LinearGradient(0, 0, 1, 0, true, meth, stops);
 
 		gc.setStroke(linearGradient);
 		gc.strokeLine(x, y, x2, y2);
@@ -112,7 +113,7 @@ public abstract class CanvasApplication extends Application {
 		gc.setStroke(color);
 		gc.strokeText(text, x, y);
 	}
-	
+
 	public void drawRect(int x, int y, int w, int h, Color color) {
 		gc.setStroke(color);
 		gc.strokeRect(x, y, w, h);
@@ -123,7 +124,7 @@ public abstract class CanvasApplication extends Application {
 		gc.strokeLine(x, y, x, y);
 	}
 
-	public void drawPixel(int x, int y, Color... colors) {
+	public void drawPixel(int x, int y, CycleMethod meth, Color... colors) {
 		ArrayList<Stop> stops = new ArrayList<Stop>();
 		int i = 0;
 		for (Color c : colors) {
@@ -131,10 +132,18 @@ public abstract class CanvasApplication extends Application {
 			i++;
 		}
 
-		LinearGradient linearGradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops);
+		LinearGradient linearGradient = new LinearGradient(0, 0, 1, 0, true, meth, stops);
 
 		gc.setStroke(linearGradient);
 		gc.strokeLine(x, y, x, y);
+	}
+
+	public void drawImage(Image img, int x, int y) {
+		gc.drawImage(img, x, y);
+	}
+
+	public void drawImage(Image img, int x, int y, int w, int h) {
+		gc.drawImage(img, x, y, w, h);
 	}
 
 	public BorderPane getRoot() {
