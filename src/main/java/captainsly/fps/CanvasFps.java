@@ -1,6 +1,11 @@
 package captainsly.fps;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.application.Application;
+import javafx.scene.image.Image;
+import javafx.scene.image.PixelReader;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -20,7 +25,7 @@ public class CanvasFps extends CanvasApplication {
 			{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
 			{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
 			{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-			{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+			{ 1, 1, 2, 3, 4, 5, 6, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
 			{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
 			{ 1, 4, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
 			{ 1, 4, 0, 4, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
@@ -30,13 +35,28 @@ public class CanvasFps extends CanvasApplication {
 			{ 1, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
 			{ 1, 4, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
 			{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 } };
-	
+
 	private double posX = 22, posY = 12;
 	private double dirX = -1, dirY = 0;
 	private double planeX = 0, planeY = 0.66;
 
+	private int texSize = 64;
+
+	private List<Image> textures;
+
 	public CanvasFps() {
-		super(1080, 720);
+		super(1024, 720);
+
+		textures = new ArrayList<Image>();
+		textures.add(new Image("eagle.png"));
+		textures.add(new Image("redbrick.png"));
+		textures.add(new Image("purplestone.png"));
+		textures.add(new Image("greystone.png"));
+		textures.add(new Image("bluestone.png"));
+		textures.add(new Image("mossy.png"));
+		textures.add(new Image("wood.png"));
+		textures.add(new Image("colorstone.png"));
+
 	}
 
 	@Override
@@ -50,50 +70,6 @@ public class CanvasFps extends CanvasApplication {
 
 	@Override
 	public void render() {
-		// FLOOR AND CEILING CAST -
-		// Uncomment for the ceiling and floor, currently lags the
-		// program since each individual pixel is being drawn every
-		// frame
-//		for (int y = 0; y < getCanvasHeight(); y++) {
-//			// rayDir for leftmost ray (x = 0) and rightmost ray (x = width)
-//			float rayDirX0 = (float) (dirX - planeX);
-//			float rayDirY0 = (float) (dirY - planeY);
-//			float rayDirX1 = (float) (dirX + planeX);
-//			float rayDirY1 = (float) (dirY + planeY);
-//
-//			// Current y position compared to the center of the screen (the horizon)
-//			int p = (int) (y - getCanvasHeight() / 2);
-//
-//			// Vertical position of the camera
-//			float posZ = (float) (0.5 * getCanvasHeight());
-//
-//			// Horizontal distance from the camera to the floor for the current row
-//			// 0.5 is the z position exactly in the middle between floor and ceiling
-//			float rowDistance = posZ / p;
-//
-//			// Calculate the real world step vector we have to add for each x (parallel to
-//			// camera plane)
-//			// adding step by step avoids multiplications with a weight in the inner loop
-//			float floorStepX = (float) (rowDistance * (rayDirX1 - rayDirX0) / getCanvasWidth());
-//			float floorStepY = (float) (rowDistance * (rayDirY1 - rayDirY0) / getCanvasWidth());
-//
-//			// The Pixel colors of the ceiling and floor
-//			Color floorColor = Color.BROWN.darker().darker();
-//			Color ceilingColor = Color.SILVER;
-//
-//			// Real world coordinates of the left most column. This will be updated as we
-//			// step to the right
-//			float floorX = (float) (posX + rowDistance * rayDirX0);
-//			float floorY = (float) (posY + rowDistance * rayDirY0);
-//
-//			for (int x = 0; x < getCanvasWidth(); x++) {
-//
-//				drawPixel(x, y, floorColor);
-//				drawPixel(x, (int) (getCanvasHeight() - y - 1), ceilingColor);
-//			}
-//
-//		}
-
 		// WALL CASTING
 		for (int x = 0; x < getCanvasWidth(); x++) {
 			double cameraX = 2 * x / (double) getCanvasWidth() - 1; // X-Coordinate in Camera Space
@@ -166,93 +142,103 @@ public class CanvasFps extends CanvasApplication {
 			if (drawEnd >= getCanvasHeight())
 				drawEnd = (int) (getCanvasHeight() - 1);
 
-//			// Texturing Calculations
-//			int texNum = worldMap[mapX][mapY] - 1;
-//
-//			// Calculate value of wallx
-//			double wallX;
-//			if (side == 0)
-//				wallX = posY + perpWallDist * rayDirY;
-//			else
-//				wallX = posX + perpWallDist * rayDirX;
-//			wallX -= Math.floor(wallX);
-//
-//			int texX = (int) (wallX * 64);
-//			if (side == 0 && rayDirX > 0)
-//				texX = 64 - texX - 1;
-//			if (side == 1 && rayDirY < 0)
-//				texX = 64 - texX - 1;
-//
-//			double step = 1.0 * 64 / lineHeight;
-//
-//			// Starting texture coordinate
-//			double texPos = (drawStart - getCanvasHeight() / 2 + lineHeight / 2) * step;
-//			for (int y = drawStart; y < drawEnd; y++) {
-//				// Cast the texture coordinate to integer, and mask with (64 - 1) in case of
-//				// overflow
-//				int texY = (int) texPos & (64 - 1);
-//				texPos += step;
-//
-//				Image wallImg = null;
-//				switch (worldMap[mapX][mapY]) {
-//				case 1:
-//					wallImg = new Image("redbrick.png");
-//					break;
-//				case 2:
-//					wallImg = new Image("colorstone.png");
-//					break;
-//				case 3:
-//					wallImg = new Image("bluestone.png");
-//					break;
-//				case 4:
-//					wallImg = new Image("greystone.png");
-//					break;
-//				default:
-//					wallImg = new Image("wood.png");
-//				}
-//
-//				drawImage(wallImg, x, y, 64, 64);
-//			}
+			// Texturing
+			int texNum = worldMap[mapX][mapY] - 1;
+			double wallX;
+			if (side == 0)
+				wallX = posY + perpWallDist * rayDirY;
+			else
+				wallX = posX + perpWallDist * rayDirX;
 
-			Color color;
-			switch (worldMap[mapX][mapY]) {
-			case 1:
-				color = Color.RED;
-				break; // red
-			case 2:
-				color = Color.GREEN;
-				break; // green
-			case 3:
-				color = Color.BLUE;
-				break; // blue
-			case 4:
-				color = Color.ORANGE;
-				break; // white
-			case 5:
-				color = Color.PURPLE;
-				break;
-			case 6:
-				color = Color.TURQUOISE;
-				break;
-			case 7:
-				color = Color.BROWN;
-				break;
-			case 8:
-				color = Color.YELLOW;
-				break;
-			default:
-				color = Color.YELLOW;
-				break; // yellow
+			wallX -= Math.floor(wallX);
+
+			int texX = (int) (wallX * (double) texSize);
+			if (side == 0 && rayDirX > 0)
+				texX = texSize - texX - 1;
+			if (side == 1 && rayDirY < 0)
+				texX = texSize - texX - 1;
+
+			double step = 1.0 * texSize / lineHeight;
+			double texPos = (drawStart - getCanvasHeight() / 2 + lineHeight / 2) * step;
+			for (int y = drawStart; y < drawEnd; y++) {
+				int texY = (int) texPos & (texSize - 1);
+				texPos += step;
+				// Get the pixel reader from the texture, and set the pixel of each line to the
+				// color of the texture
+				PixelReader pr = textures.get(texNum).getPixelReader();
+				Color pc = new Color(pr.getColor(texX, texY).getRed(), pr.getColor(texX, texY).getBlue(),
+						pr.getColor(texX, texY).getGreen(), pr.getColor(texX, texY).getOpacity());
+
+				if (side == 1)
+					pc = pc.darker().darker();
+
+				drawLine(x, y, x, y, pc);
 			}
 
-			// give x and y sides different brightness
-			if (side == 1) {
-				Color a = color.darker().darker();
-				color = a;
+			// Floor Casting
+			double floorXWall, floorYWall;
+
+			// 4 different wall directions possible
+			if (side == 0 && rayDirX > 0) {
+				floorXWall = mapX;
+				floorYWall = mapY + wallX;
+			} else if (side == 0 && rayDirX < 0) {
+				floorXWall = mapX + 1.0;
+				floorYWall = mapY + wallX;
+			} else if (side == 1 && rayDirY > 0) {
+				floorXWall = mapX + wallX;
+				floorYWall = mapY;
+			} else {
+				floorXWall = mapX + wallX;
+				floorYWall = mapY + 1.0;
 			}
 
-			// draw the pixels of the stripe as a vertical line
-			drawLine(x, drawStart, x, drawEnd, color);
+			double distWall, distPlayer, currentDist;
+
+			distWall = perpWallDist;
+			distPlayer = 0.0;
+
+			if (drawEnd < 0)
+				drawEnd = (int) getCanvasHeight();
+
+			for (int y = drawEnd + 1; y < getCanvasHeight(); y++) {
+				currentDist = getCanvasHeight() / (2.0 * y - getCanvasHeight());
+
+				double weight = (currentDist - distPlayer) / (distWall - distPlayer);
+
+				double currentFloorX = weight * floorXWall + (1.0 - weight) * posX;
+				double currentFloorY = weight * floorYWall + (1.0 - weight) * posY;
+
+				int floorTexX, floorTexY;
+				floorTexX = (int) (currentFloorX * texSize) % texSize;
+				floorTexY = (int) (currentFloorY * texSize) % texSize;
+
+				Color color = null;
+
+				double r = textures.get(3).getPixelReader().getColor(floorTexX, floorTexY).getRed();
+				double g = textures.get(3).getPixelReader().getColor(floorTexX, floorTexY).getBlue();
+				double b = textures.get(3).getPixelReader().getColor(floorTexX, floorTexY).getGreen();
+				double o = textures.get(3).getPixelReader().getColor(floorTexX, floorTexY).getOpacity();
+
+				color = new Color(r, g, b, o);
+
+				drawLine(x, y, x, y, color);
+
+				Color ceilingColor = null;
+				r = 0;
+				b = 0;
+				g = 0;
+				o = 0;
+				r = textures.get(6).getPixelReader().getColor(floorTexX, floorTexY).getRed();
+				g = textures.get(6).getPixelReader().getColor(floorTexX, floorTexY).getBlue();
+				b = textures.get(6).getPixelReader().getColor(floorTexX, floorTexY).getGreen();
+				o = textures.get(6).getPixelReader().getColor(floorTexX, floorTexY).getOpacity();
+
+				ceilingColor = new Color(r, g, b, o);
+
+				drawLine(x, (int) getCanvasHeight() - y, x, (int) getCanvasHeight() - y, ceilingColor);
+			}
+
 		}
 
 		double frameTime = getDelta() / 1000;
