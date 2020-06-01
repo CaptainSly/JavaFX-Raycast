@@ -5,7 +5,6 @@ import java.util.List;
 
 import javafx.application.Application;
 import javafx.scene.image.Image;
-import javafx.scene.image.PixelReader;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -16,16 +15,16 @@ public class CanvasFps extends CanvasApplication {
 			{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
 			{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
 			{ 1, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 3, 0, 3, 0, 3, 0, 0, 0, 1 },
-			{ 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-			{ 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 1 },
-			{ 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-			{ 1, 0, 0, 0, 0, 0, 2, 2, 0, 2, 2, 0, 0, 0, 0, 3, 0, 3, 0, 3, 0, 0, 0, 1 },
+			{ 1, 1, 1, 1, 1, 1, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+			{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 1 },
+			{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+			{ 1, 0, 4, 4, 1, 1, 2, 2, 0, 2, 2, 0, 0, 0, 0, 3, 0, 3, 0, 3, 0, 0, 0, 1 },
+			{ 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+			{ 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+			{ 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
 			{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
 			{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-			{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-			{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-			{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-			{ 1, 1, 2, 3, 4, 5, 6, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+			{ 1, 1, 2, 3, 4, 5, 6, 8, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
 			{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
 			{ 1, 4, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
 			{ 1, 4, 0, 4, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
@@ -45,7 +44,7 @@ public class CanvasFps extends CanvasApplication {
 	private List<Image> textures;
 
 	public CanvasFps() {
-		super(1024, 720);
+		super(640, 480);
 
 		textures = new ArrayList<Image>();
 		textures.add(new Image("eagle.png"));
@@ -165,9 +164,13 @@ public class CanvasFps extends CanvasApplication {
 				texPos += step;
 				// Get the pixel reader from the texture, and set the pixel of each line to the
 				// color of the texture
-				PixelReader pr = textures.get(texNum).getPixelReader();
-				Color pc = new Color(pr.getColor(texX, texY).getRed(), pr.getColor(texX, texY).getBlue(),
-						pr.getColor(texX, texY).getGreen(), pr.getColor(texX, texY).getOpacity());
+				double r, g, b, o;
+				r = textures.get(texNum).getPixelReader().getColor(texX, texY).getRed();
+				g = textures.get(texNum).getPixelReader().getColor(texX, texY).getGreen();
+				b = textures.get(texNum).getPixelReader().getColor(texX, texY).getBlue();
+				o = textures.get(texNum).getPixelReader().getColor(texX, texY).getOpacity();
+
+				Color pc = new Color(r, g, b, o);
 
 				if (side == 1)
 					pc = pc.darker().darker();
@@ -213,30 +216,26 @@ public class CanvasFps extends CanvasApplication {
 				floorTexX = (int) (currentFloorX * texSize) % texSize;
 				floorTexY = (int) (currentFloorY * texSize) % texSize;
 
-				Color color = null;
-
-				double r = textures.get(3).getPixelReader().getColor(floorTexX, floorTexY).getRed();
-				double g = textures.get(3).getPixelReader().getColor(floorTexX, floorTexY).getBlue();
-				double b = textures.get(3).getPixelReader().getColor(floorTexX, floorTexY).getGreen();
-				double o = textures.get(3).getPixelReader().getColor(floorTexX, floorTexY).getOpacity();
-
-				color = new Color(r, g, b, o);
-
-				drawLine(x, y, x, y, color);
-
+				Color floorColor = null;
 				Color ceilingColor = null;
-				r = 0;
-				b = 0;
-				g = 0;
-				o = 0;
+				double r, g, b, o;
+
 				r = textures.get(6).getPixelReader().getColor(floorTexX, floorTexY).getRed();
-				g = textures.get(6).getPixelReader().getColor(floorTexX, floorTexY).getBlue();
-				b = textures.get(6).getPixelReader().getColor(floorTexX, floorTexY).getGreen();
+				b = textures.get(6).getPixelReader().getColor(floorTexX, floorTexY).getBlue();
+				g = textures.get(6).getPixelReader().getColor(floorTexX, floorTexY).getGreen();
 				o = textures.get(6).getPixelReader().getColor(floorTexX, floorTexY).getOpacity();
 
 				ceilingColor = new Color(r, g, b, o);
-
 				drawLine(x, (int) getCanvasHeight() - y, x, (int) getCanvasHeight() - y, ceilingColor);
+
+				r = textures.get(3).getPixelReader().getColor(floorTexX, floorTexY).getRed();
+				b = textures.get(3).getPixelReader().getColor(floorTexX, floorTexY).getBlue();
+				g = textures.get(3).getPixelReader().getColor(floorTexX, floorTexY).getGreen();
+				o = textures.get(3).getPixelReader().getColor(floorTexX, floorTexY).getOpacity();
+
+				floorColor = new Color(r, g, b, o).darker().darker();
+				drawLine(x, y, x, y, floorColor);
+
 			}
 
 		}
