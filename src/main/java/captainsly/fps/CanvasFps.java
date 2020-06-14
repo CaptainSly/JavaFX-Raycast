@@ -1,15 +1,26 @@
 package captainsly.fps;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Vector;
 
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 
 public class CanvasFps extends CanvasApplication {
 
+	
+	/***
+	 *
+	 * Working on sprites, code isn't fully implemented. 
+	 *
+	 */
+	
+	
 	private int[][] worldMap = { { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
 			{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
 			{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
@@ -39,9 +50,25 @@ public class CanvasFps extends CanvasApplication {
 	private double dirX = -1, dirY = 0;
 	private double planeX = 0, planeY = 0.66;
 
+	private int numSprites = 19;
+
+	Sprite[] sprite = { // x, y, texture index
+			new Sprite(20.5, 11.5, 10), new Sprite(18.5, 4.5, 10), new Sprite(10.0, 4.5, 10),
+			new Sprite(10.0, 12.5, 10), new Sprite(3.5, 6.5, 10), new Sprite(3.5, 20.5, 10), new Sprite(3.5, 14.5, 10),
+			new Sprite(14.5, 20.5, 10),
+
+			new Sprite(18.5, 10.5, 9), new Sprite(18.5, 11.5, 9), new Sprite(18.5, 12.5, 9),
+
+			new Sprite(21.5, 1.5, 8), new Sprite(15.5, 1.5, 8), new Sprite(16.0, 1.8, 8), new Sprite(16.2, 1.2, 8),
+			new Sprite(3.5, 2.5, 8), new Sprite(9.5, 15.5, 8), new Sprite(10.0, 15.1, 8), new Sprite(10.5, 15.8, 8) };
+
 	private int texSize = 64;
 
 	private List<Image> textures;
+
+	private int[] spriteOrder = new int[numSprites];
+	private double[] spriteDistance = new double[numSprites];
+	private double[] zBuffer;
 
 	public CanvasFps() {
 		super(640, 480);
@@ -55,6 +82,11 @@ public class CanvasFps extends CanvasApplication {
 		textures.add(new Image("mossy.png"));
 		textures.add(new Image("wood.png"));
 		textures.add(new Image("colorstone.png"));
+		textures.add(new Image("barrel.png"));
+		textures.add(new Image("pillar.png"));
+		textures.add(new Image("greenlight.png"));
+
+		zBuffer = new double[(int) getCanvasWidth()];
 
 	}
 
@@ -238,8 +270,25 @@ public class CanvasFps extends CanvasApplication {
 
 			}
 
+			// Set zbuffer for the spriteCasting
+			zBuffer[x] = perpWallDist;
+
+			// Sprite Casting
+			for (int i = 0; i < numSprites; i++) {
+				spriteOrder[i] = i;
+				spriteDistance[i] = ((posX - sprite[i].x) * (posX - sprite[i].x)
+						+ (posY - sprite[i].y) * (posY - sprite[i].y));
+				
+			}
+
+			//sortSprites(spriteOrder, spriteDistance, numSprites);
+			Arrays.sort(spriteDistance);
+			Arrays.sort(spriteOrder);
 		}
 
+		
+		
+		
 		double frameTime = getDelta() / 1000;
 
 		double moveSpeed = frameTime * 5.0;
@@ -291,6 +340,19 @@ public class CanvasFps extends CanvasApplication {
 		planeX = planeX * Math.cos(angle) - planeY * Math.sin(angle);
 		planeY = oldPlaneX * Math.sin(angle) + planeY * Math.cos(angle);
 	}
+
+	public class Sprite {
+		double x, y;
+		int texture;
+
+		public Sprite(double x, double y, int texture) {
+			this.x = x;
+			this.y = y;
+			this.texture = texture;
+		}
+
+	}
+	
 
 	public static void main(String[] args) {
 		CanvasFps f = new CanvasFps();
