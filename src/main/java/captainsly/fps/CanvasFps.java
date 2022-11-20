@@ -1,15 +1,14 @@
 package captainsly.fps;
 
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Vector;
 
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.util.Pair;
 
 public class CanvasFps extends CanvasApplication {
 
